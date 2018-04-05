@@ -16,7 +16,6 @@ import antlr.SMTLexer;
 import antlr.SMTParser;
 import za.ac.sun.cs.green.expr.Expression;
 import za.ac.sun.cs.green.resources.Pair;
-import za.ac.sun.cs.green.resources.Tri;
 
 public class KleeOutputParser{
 
@@ -116,6 +115,7 @@ public class KleeOutputParser{
 	 * 2) Builds on that expression by adding crap to it
 	 */
 	public static Expression createExpressionKlee(String query){
+		query.replaceAll("\n", " ");
 		//Parse the string
 		ANTLRInputStream in = new ANTLRInputStream(query);
 		SMTLexer lexer = new SMTLexer(in);

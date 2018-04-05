@@ -1,7 +1,13 @@
 package za.ac.sun.cs.green.expr;
 
-public class IntConstant extends Constant {
+import java.io.Serializable;
 
+public class IntConstant extends Constant implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final int value;
 
 	public IntConstant(final int value) {

@@ -82,9 +82,16 @@ public class SATBVFactorizerService extends BasicService {
 
 	@Override
 	public Object childDone(Instance instance, Service subservice, Instance subinstance, Object result) {
-		Boolean issat = (Boolean) result;
-		if ((issat != null) && !issat) {
-			return false;
+		if(result instanceof Boolean){
+			Boolean issat = (Boolean) result;
+			if ((issat != null) && !issat) {
+				return false;
+			}			
+		}
+		else{
+			if(result == null){
+				return false;
+			}
 		}
 		@SuppressWarnings("unchecked")
 		HashSet<Instance> unsolved = (HashSet<Instance>) instance.getData(BVFACTORS_UNSOLVED);

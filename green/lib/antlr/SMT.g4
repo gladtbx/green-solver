@@ -31,7 +31,7 @@ letexpr: '(' SYMBOL expr ')';
 
 SINGLE: 'empty';
 
-DOUB: '=' | 'concat' | 'and' | 'or' | 'bvslt' | 'bvult' | 'bvsle' | 'bvule' | 'bvsgt' | 'bvugt' | 'bvsge' | 'bvuge' | 'bvadd' | 'bvsub' | 'bvmul' | 'bvudiv' | 'bvshl' | 'bvlshl' | 'bvshr' | 'bvlshr' | 'bvand' | 'bvnand' | 'bvor' | 'bvnor' | 'bvxor' | 'bvxnor' | 'select';
+DOUB: '=' | 'concat' | 'and' | 'or' | 'bvslt' | 'bvult' | 'bvsle' | 'bvule' | 'bvsgt' | 'bvugt' | 'bvsge' | 'bvuge' | 'bvadd' | 'bvsub' | 'bvmul' | 'bvudiv' | 'bvshl' | 'bvlshl' | 'bvshr' | 'bvlshr' | 'bvand' | 'bvnand' | 'bvor' | 'bvnor' | 'bvxor' | 'bvxnor' | 'bvsrem' | 'select';
 
 //select: 'select' (SYMBOL|'(' store ')'| '(' select ')') expr;
 //store: 'store' (SYMBOL| '(' store ')' | '(' select ')') expr expr;

@@ -545,6 +545,13 @@ public class BVFactorExpression {
 		 * place them together since they same variables (those in the  
 		 * Therefore, they will eventually 
 		 */
+		/*
+		 * Apparently there is a subtle bug created by the subtle algorithm.
+		 * The alias.getFactorizerStateVariables() returns the previousStateVariables
+		 * which can be NULL (I don't get why can it by NULL, my guess is its from an entity that is not fully
+		 * computed yet).
+		 * 
+		 */
 		public void postVisit(Alias alias){
 			if(!alias.hasFactorizerInformation()){
 				/*
@@ -557,6 +564,13 @@ public class BVFactorExpression {
 				currentConjunctVars = alias.getFactorizerStateVariables();
 				alias.exploreSubexpression(false);
 
+			}
+			/*
+			 * Gladtbx:
+			 * Really just a hot fix here. 
+			 */
+			if(currentConjunctVars == null){
+				currentConjunctVars = new IdentityHashSet<SelectStore>();
 			}
 			currentConjunctVars.addAll(alias.getFactorizerAliasVariblesUsed());
 			store.stickOntoEnd(alias.getFactorizerAliasStack());

@@ -1,7 +1,13 @@
 package za.ac.sun.cs.green.resources;
 
-public class Pair <T,L>{
+import java.io.Serializable;
 
+public class Pair <T,L> implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1218406282501581095L;
 	public final T first;
 	public final L second;
 	

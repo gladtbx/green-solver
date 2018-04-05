@@ -3,6 +3,7 @@
 	<name>greenserver</name>
 	<comment></comment>
 	<projects>
+		<project>green</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

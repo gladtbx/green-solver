@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import org.apfloat.Apint;
 
+import com.microsoft.z3.Model;
+
+import za.ac.sun.cs.green.resources.Pair;
 import za.ac.sun.cs.green.util.Reporter;
 
 /**
@@ -126,6 +129,8 @@ public interface Store {
 	 *            the serializable value for the association
 	 */
 	public void put(String key, Serializable value);
+
+	public Pair<Boolean, Model> getPair(String key);
 
 
 }

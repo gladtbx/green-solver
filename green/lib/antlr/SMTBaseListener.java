@@ -17,84 +17,6 @@ public class SMTBaseListener implements SMTListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterSymbol(@NotNull SMTParser.SymbolContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitSymbol(@NotNull SMTParser.SymbolContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterBool(@NotNull SMTParser.BoolContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitBool(@NotNull SMTParser.BoolContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterNothing(@NotNull SMTParser.NothingContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitNothing(@NotNull SMTParser.NothingContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterArraySize(@NotNull SMTParser.ArraySizeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitArraySize(@NotNull SMTParser.ArraySizeContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterBitManipulation(@NotNull SMTParser.BitManipulationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitBitManipulation(@NotNull SMTParser.BitManipulationContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterDeclarations(@NotNull SMTParser.DeclarationsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitDeclarations(@NotNull SMTParser.DeclarationsContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
 	@Override public void enterSingle(@NotNull SMTParser.SingleContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -108,52 +30,13 @@ public class SMTBaseListener implements SMTListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterTriple(@NotNull SMTParser.TripleContext ctx) { }
+	@Override public void enterSymbol(@NotNull SMTParser.SymbolContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void exitTriple(@NotNull SMTParser.TripleContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterBvnumber(@NotNull SMTParser.BvnumberContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitBvnumber(@NotNull SMTParser.BvnumberContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterRoot(@NotNull SMTParser.RootContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitRoot(@NotNull SMTParser.RootContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterDoub(@NotNull SMTParser.DoubContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitDoub(@NotNull SMTParser.DoubContext ctx) { }
+	@Override public void exitSymbol(@NotNull SMTParser.SymbolContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -173,13 +56,26 @@ public class SMTBaseListener implements SMTListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterExpr(@NotNull SMTParser.ExprContext ctx) { }
+	@Override public void enterBitManipulation(@NotNull SMTParser.BitManipulationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void exitExpr(@NotNull SMTParser.ExprContext ctx) { }
+	@Override public void exitBitManipulation(@NotNull SMTParser.BitManipulationContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterRoot(@NotNull SMTParser.RootContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitRoot(@NotNull SMTParser.RootContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -199,13 +95,26 @@ public class SMTBaseListener implements SMTListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterAssertions(@NotNull SMTParser.AssertionsContext ctx) { }
+	@Override public void enterExpr(@NotNull SMTParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void exitAssertions(@NotNull SMTParser.AssertionsContext ctx) { }
+	@Override public void exitExpr(@NotNull SMTParser.ExprContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterDoub(@NotNull SMTParser.DoubContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitDoub(@NotNull SMTParser.DoubContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -219,6 +128,97 @@ public class SMTBaseListener implements SMTListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitLetexpr(@NotNull SMTParser.LetexprContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterBvnumber(@NotNull SMTParser.BvnumberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitBvnumber(@NotNull SMTParser.BvnumberContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterAssertions(@NotNull SMTParser.AssertionsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitAssertions(@NotNull SMTParser.AssertionsContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterArraySize(@NotNull SMTParser.ArraySizeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitArraySize(@NotNull SMTParser.ArraySizeContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterTriple(@NotNull SMTParser.TripleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitTriple(@NotNull SMTParser.TripleContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterNothing(@NotNull SMTParser.NothingContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitNothing(@NotNull SMTParser.NothingContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterBool(@NotNull SMTParser.BoolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitBool(@NotNull SMTParser.BoolContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterDeclarations(@NotNull SMTParser.DeclarationsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitDeclarations(@NotNull SMTParser.DeclarationsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

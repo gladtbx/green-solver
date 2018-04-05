@@ -10,7 +10,10 @@ import java.util.logging.Logger;
 
 import org.apfloat.Apint;
 
+import com.microsoft.z3.Model;
+
 import za.ac.sun.cs.green.Green;
+import za.ac.sun.cs.green.resources.Pair;
 import za.ac.sun.cs.green.util.Base64;
 
 public abstract class BasicStore implements Store {
@@ -88,6 +91,12 @@ public abstract class BasicStore implements Store {
 	public Apint getApfloatInteger(String key) {
 		Object value = get(key);
 		return (value instanceof Apint) ? (Apint) value : null;
+	}
+	
+	@Override
+	public Pair<Boolean, Model> getPair(String key) {
+		Object value = get(key);
+		return (value instanceof Pair<?,?>) ? (Pair<Boolean, Model>) value : null;
 	}
 
 }

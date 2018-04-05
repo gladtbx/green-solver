@@ -60,9 +60,9 @@ public class SubsumptionHelper {
 			Model model = (Model) check(mainCtx, expr, Status.SATISFIABLE, mainSolver);
 
 			boolean ret;
-			expr.dispose();
+			//expr.dispose();
 			if(model != null){
-				model.dispose();
+				//model.dispose();
 				sat ++;
 				ret = true;
 			}else{
@@ -514,6 +514,10 @@ public class SubsumptionHelper {
 					Expr right = (Expr) stack.pop();
 					int left = ((BitVecNum) stack.pop()).getInt();
 					stack.push(ctx.mkZeroExt(left, (BitVecExpr)right));
+				}else if(operation.getOperator() == Operation.Operator.BVSREM){
+					Expr right = (Expr) stack.pop();
+					Expr left = (Expr) stack.pop();
+					stack.push(ctx.mkBVSRem((BitVecExpr) left, (BitVecExpr)right));
 				}else{
 					System.out.println(operation.getOperator().toString());
 					new java.lang.Exception().printStackTrace();

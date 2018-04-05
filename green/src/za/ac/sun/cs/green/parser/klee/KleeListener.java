@@ -48,6 +48,7 @@ public class KleeListener implements SMTListener{
 
 	public KleeListener(ParseTree tree){
 		letMap = new HashMap<String, Expression>();
+		//letMap.put("bvsrem", new Operation(Operation.Operator.BVSREM));
 		s = new Stack<Expression>();
 		returnExpression = null;
 		this.tree = tree;
@@ -250,6 +251,10 @@ public class KleeListener implements SMTListener{
 			Expression r = s.pop();
 			Expression l = s.pop();
 			s.push(new Operation(Operation.Operator.BVXNOR, l, r));
+		}else if(op.equals("bvsrem")){
+			Expression r = s.pop();
+			Expression l = s.pop();
+			s.push(new Operation(Operation.Operator.BVSREM, l, r));
 		}else{
 			Exception e = new Exception();
 			System.out.println("Alleged operation: "+ op);
@@ -410,7 +415,8 @@ public class KleeListener implements SMTListener{
 			e.printStackTrace();
 			System.exit(1);
 		}
-		if(alias.length()>4){
+		//Gladtbx: Why > 4 ?
+		if(alias.length()>5){
 			Exception e = new Exception();
 			System.out.println("Suspicously sized alias: "+ alias);
 			e.printStackTrace();
