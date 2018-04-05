@@ -76,7 +76,7 @@ public class ModelZ3JavaService extends ModelService {
 				Model model = Z3solver.getModel();
 				for(Map.Entry<Variable,Expr> entry : variableMap.entrySet()) {
 					Variable greenVar = entry.getKey();
-					//System.out.println("Getting Variable: " + greenVar.getName() + " from Z3solver");
+					System.out.println("Getting Variable: " + greenVar.getName() + " from Z3solver");
 					Expr z3Var = entry.getValue();
 					ArrayList<Expr> z3Val = new ArrayList<Expr>();
 					if(greenVar instanceof ArrayVariable){
