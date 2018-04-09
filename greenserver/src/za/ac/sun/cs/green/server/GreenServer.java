@@ -142,12 +142,12 @@ public class GreenServer {
 	        if(requestRet != null){
 	        	if(requestRet instanceof Map<?, ?>){
 	            	@SuppressWarnings("unchecked")
-					Map<Variable, Object> vm = (Map<Variable, Object>) requestRet;
+					Map<String, Object> vm = (Map<String, Object>) requestRet;
 	            	//System.out.println("Get Map: " + vm.toString());         
 	            	ret = "1";
-	            	for(Map.Entry<Variable,Object> entry : vm.entrySet()){
+	            	for(Map.Entry<String,Object> entry : vm.entrySet()){
 	            		ret+=" ";
-	            		ret+=entry.getKey().getName();
+	            		ret+=entry.getKey();
 	            		ret+=" ";
 	            		int[] vals = (int[]) entry.getValue();
 	            		for(int val: vals){
@@ -169,6 +169,7 @@ public class GreenServer {
 	        return ret.toCharArray();
 		}catch(Exception x){
 			log.log(Level.SEVERE, "Process String Failed",x);
+			System.out.println("Process String Failed");
 		}
 		return ret.toCharArray();
 	}

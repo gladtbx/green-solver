@@ -9,17 +9,23 @@ import java.util.logging.Level;
 
 import com.microsoft.z3.ArithExpr;
 import com.microsoft.z3.ArrayExpr;
+import com.microsoft.z3.ArraySort;
 import com.microsoft.z3.BitVecExpr;
 import com.microsoft.z3.BitVecNum;
+import com.microsoft.z3.BitVecSort;
 import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Context;
 import com.microsoft.z3.Expr;
+import com.microsoft.z3.FuncDecl;
+import com.microsoft.z3.FuncInterp;
+import com.microsoft.z3.FuncInterp.Entry;
 import com.microsoft.z3.IntExpr;
 import com.microsoft.z3.Model;
 import com.microsoft.z3.Solver;
 import com.microsoft.z3.Sort;
 import com.microsoft.z3.Status;
 import com.microsoft.z3.Z3Exception;
+import com.microsoft.z3.enumerations.Z3_sort_kind;
 
 import za.ac.sun.cs.green.Instance;
 import za.ac.sun.cs.green.Green;
@@ -55,9 +61,48 @@ public class ModelZ3JavaService extends ModelService {
 	    }
 	}
 
+	private String processFuncInterp(FuncInterp funcInterp){
+		String ret="";
+		Expr el = funcInterp.getElse();
+		if(el.isNumeral()){
+//			int elval = Integer.parseInt(el.toString());
+			ret += el.toString();
+			//Add el to the returned string
+		} else {
+			log.log(Level.WARNING, "Error unsupported type for variable " + el);
+			return null;
+		}
+		
+		for(Entry e: funcInterp.getEntries()){
+			if(e.getNumArgs() > 1){
+				System.out.println("ModelZ3JavaService Error: entry has more than 1 argument, should be a single index");
+				return null;
+			}
+			Expr[] args = e.getArgs();
+			Expr arg = args[0];
+			int index;
+			if(arg.isNumeral()){
+				index = Integer.parseInt(arg.toString());
+			} else {
+				log.log(Level.WARNING, "Error unsupported type for variable " + arg);
+				return null;
+			}
+			Expr argVal = e.getValue();
+			if(argVal.isNumeral()){
+//				val[index] = Integer.parseInt(argVal.toString());
+				//add the new pair to the returned string
+				ret+="|"+index+","+argVal.toString();
+			}else{
+				log.log(Level.WARNING, "Error unsupported type for variable " + argVal);
+				return null;
+			}
+		}
+		return ret;
+	}
+	
 	@Override
-	protected Map<Variable, Object> model(Instance instance) {		
-		HashMap<Variable,Object> results = new HashMap<Variable, Object>();
+	protected Map<String, Object> model(Instance instance) {		
+		HashMap<String,Object> results = new HashMap<String, Object>();
 		// translate instance to Z3 
 		//Z3JavaTranslator translator = new Z3JavaTranslator(ctx);
 		Explorer ex = new Explorer(ctx);
@@ -72,8 +117,53 @@ public class ModelZ3JavaService extends ModelService {
 		//solve 		
 		try { // Real Stuff is still untested
 			if (Status.SATISFIABLE == Z3solver.check()) {
+				//getVariableMap is not working probably, some variable is missing.
 				Map<Variable, Expr> variableMap = ex.getVariableMap();
 				Model model = Z3solver.getModel();
+
+/*				
+				System.out.println(model.toString());
+				//Instead of creating the mapping by ourself, we do it by using Z3 natively.
+				//We start by getting FuncDecls, and check for arity. if arity is not zero, we get declaration of it.
+				//The var name will be in FuncDecls, and the values are in FuncDeclsImpl, we need to get 
+
+				
+				FuncDecl[] funcDecls = model.getFuncDecls();
+				FuncDecl[] constDecls = model.getConstDecls();
+				for(FuncDecl funcDecl:funcDecls){
+					System.out.println("funcDecls " + funcDecl.toString());
+					if(funcDecl.getArity() != 0){
+						//We have a non-constant funcDecl;
+						String arrayName = funcDecl.getName().toString();
+						FuncInterp funcInterp = model.getFuncInterp(funcDecl);
+						String val = processFuncInterp(funcInterp);
+						results.put(arrayName, val);
+					}
+					else{//If constant array
+						System.out.println("Arity Zero: " + funcDecl.toString());					
+					}
+				}
+				
+				for(FuncDecl constDecl:constDecls){
+					System.out.println("constDecls " + constDecl.toString());
+					System.out.println("Arity is " + constDecl.getArity());
+					String arrayName = constDecl.getName().toString();
+					Expr constExpr = model.getConstInterp(constDecl);
+					System.out.println("constantExpr: " + constExpr.toString());
+					
+					if(constDecl.getArity() == 0){
+						//We have a non-constant funcDecl;
+						String arrayName = constDecl.getName().toString();
+						FuncInterp funcInterp = model.getFuncInterp(constDecl);
+						String val = processFuncInterp(funcInterp);
+						results.put(arrayName, val);
+					}
+					else{//If constant array
+						System.out.println("Arity non-zero: " + constDecl.toString());					
+					}
+				}
+				*/
+
 				for(Map.Entry<Variable,Expr> entry : variableMap.entrySet()) {
 					Variable greenVar = entry.getKey();
 					System.out.println("Getting Variable: " + greenVar.getName() + " from Z3solver");
@@ -93,10 +183,10 @@ public class ModelZ3JavaService extends ModelService {
 					}
 					int[] val;
 					val = new int[z3Val.size()];
-					//Gladtbx: Need to parse the returned result z3Val.
-					//Need to construct a read expr to read the greenVar byte by byte
-					//So hopefully we can get the returned type as int.
-					//log.log(Level.WARNING,z3Val.getASTKind().toString());
+//					Gladtbx: Need to parse the returned result z3Val.
+//					Need to construct a read expr to read the greenVar byte by byte
+//					So hopefully we can get the returned type as int.
+//					log.log(Level.WARNING,z3Val.getASTKind().toString());
 					for(int i = 0; i < z3Val.size(); i++){
 						if(z3Val.get(i).isNumeral()){
 							val[i] = Integer.parseInt(z3Val.get(i).toString());
@@ -112,7 +202,7 @@ public class ModelZ3JavaService extends ModelService {
 						val = Double.parseDouble(z3Val.toString());
 					}
 					*/
-					results.put(greenVar, val);
+					results.put(greenVar.getName(), val);
 					String logMessage = "" + greenVar + " has value " + val.toString();
 					log.log(Level.INFO,logMessage);
 				}
@@ -121,7 +211,7 @@ public class ModelZ3JavaService extends ModelService {
 				return null;
 			}
 		} catch (Z3Exception e) {
-			log.log(Level.WARNING, "Error in Z3"+e.getMessage());
+			log.log(Level.WARNING, "Error in Z3 "+e.getMessage());
 		}
 		return results;
 	}
