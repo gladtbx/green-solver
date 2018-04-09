@@ -2,6 +2,7 @@ package za.ac.sun.cs.green.service.bvfactorizer;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import za.ac.sun.cs.green.Green;
@@ -87,6 +88,9 @@ public class SATBVFactorizerService extends BasicService {
 			if ((issat != null) && !issat) {
 				return false;
 			}			
+		}
+		else if(result instanceof Map<?, ?>){
+			return result;
 		}
 		else{
 			if(result == null){

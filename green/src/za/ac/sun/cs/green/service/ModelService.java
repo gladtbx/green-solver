@@ -42,7 +42,7 @@ public abstract class ModelService extends BasicService {
 	@Override
 	public Set<Instance> processRequest(Instance instance) {
 		@SuppressWarnings("unchecked")
-		Map<Variable,Object> result = (Map<Variable,Object>) instance.getData(getClass());
+		Map<String,Object> result = (Map<String,Object>) instance.getData(getClass());
 		if (result == null) {
 			result = solve0(instance);
 			if (result != null) {
@@ -52,11 +52,11 @@ public abstract class ModelService extends BasicService {
 		return null;
 	}
 
-	private Map<Variable,Object> solve0(Instance instance) {
+	private Map<String,Object> solve0(Instance instance) {
 		invocationCount++;
 		String key = SERVICE_KEY + instance.getFullExpression().toString();
 		@SuppressWarnings("unchecked")
-		HashMap<Variable,Object> result =(HashMap<Variable,Object>) store.get(key);
+		HashMap<String,Object> result =(HashMap<String,Object>) store.get(key);
 		if (result == null) {
 			cacheMissCount++;
 			result = solve1(instance);
@@ -69,13 +69,13 @@ public abstract class ModelService extends BasicService {
 		return result;
 	}
 
-	private HashMap<Variable,Object> solve1(Instance instance) {
+	private HashMap<String,Object> solve1(Instance instance) {
 		long startTime = System.currentTimeMillis();
-		HashMap<Variable,Object> result = (HashMap<Variable, Object>) model(instance); 
+		HashMap<String,Object> result = (HashMap<String, Object>) model(instance); 
 		timeConsumption += System.currentTimeMillis() - startTime;
 		return result; // change this!
 	}
 
-	protected abstract Map<Variable,Object> model(Instance instance);
+	protected abstract Map<String, Object> model(Instance instance);
 
 }

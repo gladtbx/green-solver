@@ -20,10 +20,10 @@ public class ModelChocoService extends ModelService {
 	}
 
 	@Override
-	protected HashMap<Variable,Object> model(Instance instance) {
+	protected HashMap<String,Object> model(Instance instance) {
 		CPModel chocoModel = new CPModel();
 		Map<Variable, IntegerVariable> variableMap = new HashMap<Variable, IntegerVariable>();
-		HashMap<Variable,Object> results = new HashMap<Variable, Object>();
+		HashMap<String,Object> results = new HashMap<String, Object>();
 		
 		try {
 			new ChocoTranslator(chocoModel, variableMap).translate(instance.getExpression());
@@ -38,7 +38,7 @@ public class ModelChocoService extends ModelService {
 				Variable greenVar = entry.getKey();
 				IntegerVariable chocoVar = entry.getValue();
 				Object val = chocoSolver.getVar(chocoVar).getVal();
-				results.put(greenVar, val);
+				results.put(greenVar.getName(), val);
 				String logMessage = "" + greenVar + " has value " + val;
 				log.log(Level.INFO,logMessage);
 			}

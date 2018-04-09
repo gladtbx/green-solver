@@ -1,6 +1,8 @@
 package za.ac.sun.cs.green.taskmanager;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -24,17 +26,35 @@ public class SerialTaskManager implements TaskManager {
 
 	public Object execute(Service parent, Instance parentInstance, Set<Service> services, Set<Instance> instances) {
 		Object result = null;
+		Map<String,Object> combinedResult = new HashMap<String,Object>();
 		for (Service service : services) {
 			for (Instance instance : instances) {
-				result = execute0(parent, parentInstance, service, instance);
-				if (result != null) {
-					break;
+				Object res = execute0(parent, parentInstance, service, instance);
+				if (res != null) {
+					if(res instanceof Map<?, ?>){
+						@SuppressWarnings("unchecked")
+						Map<String, Object> vm = (Map<String, Object>) res;
+						combinedResult.putAll(vm);
+					}else if(result == null){
+						result = res;
+					}else if(res instanceof Boolean){
+						//if it is boolean type
+						if(result instanceof Boolean){
+							result = (Boolean) result && (Boolean)res;
+						}else{
+							result = false;
+						}
+					}
 				}
 			}
+		}
+		if(result == null && !combinedResult.isEmpty()){
+			result = combinedResult;
 		}
 		if (parent != null) {
 			result = parent.allChildrenDone(parentInstance, result);
 		}
+		
 		return result;
 	}
 
