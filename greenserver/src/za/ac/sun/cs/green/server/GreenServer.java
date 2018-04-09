@@ -106,6 +106,7 @@ public class GreenServer {
 							output.print(process(query));
 						}
 					}
+					green.report();
 				}
 			} catch (IOException x) {
 				log.log(Level.SEVERE, x.getMessage(), x);

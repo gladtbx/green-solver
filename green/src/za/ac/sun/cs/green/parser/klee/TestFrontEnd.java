@@ -64,7 +64,7 @@ public class TestFrontEnd {
             if(requestRet != null){
             	if(requestRet instanceof Map<?, ?>){
                 	@SuppressWarnings("unchecked")
-					Map<Variable, Object> vm = (Map<Variable, Object>) requestRet;
+					Map<String, Object> vm = (Map<String, Object>) requestRet;
                 	System.out.println("Get Map: " + vm.toString());         
                 	ret = true;
             	}else{
