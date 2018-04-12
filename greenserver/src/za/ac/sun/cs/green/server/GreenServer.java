@@ -144,18 +144,23 @@ public class GreenServer {
 	        	if(requestRet instanceof Map<?, ?>){
 	            	@SuppressWarnings("unchecked")
 					Map<String, Object> vm = (Map<String, Object>) requestRet;
-	            	//System.out.println("Get Map: " + vm.toString());         
-	            	ret = "1";
-	            	for(Map.Entry<String,Object> entry : vm.entrySet()){
-	            		ret+=" ";
-	            		ret+=entry.getKey();
-	            		ret+=" ";
-	            		int[] vals = (int[]) entry.getValue();
-	            		for(int val: vals){
-	            			ret+= Integer.toString(val,10);//Transfer each byte in base 16
-	            			ret+= "|";
-	            		}
-	            		System.out.println(ret);
+	            	//System.out.println("Get Map: " + vm.toString());
+	            	if(vm.size() != 0){
+		            	ret = "1";
+		            	for(Map.Entry<String,Object> entry : vm.entrySet()){
+		            		ret+=" ";
+		            		ret+=entry.getKey();
+		            		ret+=" ";
+		            		int[] vals = (int[]) entry.getValue();
+		            		for(int val: vals){
+		            			ret+= Integer.toString(val,10);//Transfer each byte in base 16
+		            			ret+= "|";
+		            		}
+//		            		System.out.println(ret);
+		            	}
+	            	}
+	            	else{
+	            		ret = "0";
 	            	}
 	            	//append the mapping of var and obj 
 	        	}else{

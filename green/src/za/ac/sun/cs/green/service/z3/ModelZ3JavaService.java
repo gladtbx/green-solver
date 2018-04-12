@@ -208,7 +208,7 @@ public class ModelZ3JavaService extends ModelService {
 				}
 			} else {
 				log.log(Level.WARNING,"constraint has no model, it is infeasible");
-				return null;
+				return results;
 			}
 		} catch (Z3Exception e) {
 			log.log(Level.WARNING, "Error in Z3 "+e.getMessage());
