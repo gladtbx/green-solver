@@ -48,7 +48,7 @@ public class SerialTaskManager implements TaskManager {
 				}
 			}
 		}
-		if(result == null && !combinedResult.isEmpty()){
+		if(result == null){
 			result = combinedResult;
 		}
 		if (parent != null) {
