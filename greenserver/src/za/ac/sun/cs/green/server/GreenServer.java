@@ -63,6 +63,10 @@ public class GreenServer {
 						while(true){
 							String line = input.readLine();
 							query += line;
+							if(line == null){
+								close = true;
+								break;
+							}
 							if(line.equals("(exit)")){
 								break;
 							}
@@ -104,6 +108,10 @@ public class GreenServer {
 						}
 						if(!close){
 							output.print(process(query));
+						}
+						else{
+							output.close();
+							break;
 						}
 					}
 					green.report();
