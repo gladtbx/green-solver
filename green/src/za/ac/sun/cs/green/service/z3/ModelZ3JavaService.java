@@ -635,6 +635,10 @@ public class ModelZ3JavaService extends ModelService {
 					Expr right = (Expr) stack.pop();
 					Expr left = (Expr) stack.pop();
 					stack.push(ctx.mkBVSRem((BitVecExpr) left, (BitVecExpr)right));
+				}else if(operation.getOperator() == Operation.Operator.BVSDIV){
+					Expr right = (Expr) stack.pop();
+					Expr left = (Expr) stack.pop();
+					stack.push(ctx.mkBVSDiv((BitVecExpr) left, (BitVecExpr)right));
 				}else{
 					System.out.println(operation.getOperator().toString());
 					new java.lang.Exception().printStackTrace();

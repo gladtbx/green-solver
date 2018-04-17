@@ -255,7 +255,11 @@ public class KleeListener implements SMTListener{
 			Expression r = s.pop();
 			Expression l = s.pop();
 			s.push(new Operation(Operation.Operator.BVSREM, l, r));
-		}else{
+		}else if(op.equals("bvsdiv")){
+			Expression r = s.pop();
+			Expression l = s.pop();
+			s.push(new Operation(Operation.Operator.BVSDIV, l, r));
+		}else{			
 			Exception e = new Exception();
 			System.out.println("Alleged operation: "+ op);
 			e.printStackTrace();
