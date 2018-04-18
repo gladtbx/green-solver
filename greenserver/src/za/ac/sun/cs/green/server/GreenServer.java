@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -59,14 +60,25 @@ public class GreenServer {
 					output = new PrintStream(clientSocket.getOutputStream());
 					while (clientSocket.isConnected()) {
 						String query = "";
+						Map<String,Integer> vss = new Hashtable<String,Integer>();//Variable Sizes.
 						Boolean close = false;
 						while(true){
 							String line = input.readLine();
-							query += line;
 							if(line == null){
 								close = true;
 								break;
 							}
+							if(line.startsWith("ASV")){//ask for variables
+								String[] data = line.split("\\s+");
+								int ctr = 1;
+								while(ctr+1<data.length){
+									vss.put(data[ctr], Integer.parseInt(data[ctr+1]));
+									ctr+=2;
+								}
+								continue;
+							}
+
+							query += line;
 							if(line.equals("(exit)")){
 								break;
 							}
@@ -107,7 +119,7 @@ public class GreenServer {
 							}
 						}
 						if(!close){
-							output.print(process(query));
+							output.print(process(query,vss));
 						}
 						else{
 							output.close();
@@ -141,12 +153,13 @@ public class GreenServer {
 		}
 	}
 
-	private static char[] process(String query) {
+	private static char[] process(String query, Map<String, Integer> vss) {
 		String ret="";
 		log.info("QUERY: " + query);
 		//Gladtbx: added the parser for the query.
 		try{
 			Instance i = new Instance(green, null, KleeOutputParser.createExpressionKlee(query));
+			i.setVss(vss);
 	        Object requestRet = i.request("sat");
 	        if(requestRet != null){
 	        	if(requestRet instanceof Map<?, ?>){
@@ -161,7 +174,7 @@ public class GreenServer {
 		            		ret+=" ";
 		            		int[] vals = (int[]) entry.getValue();
 		            		for(int val: vals){
-		            			ret+= Integer.toString(val,10);//Transfer each byte in base 16
+		            			ret+= Integer.toString(val,10);//Transfer each byte in base 10
 		            			ret+= "|";
 		            		}
 //		            		System.out.println(ret);

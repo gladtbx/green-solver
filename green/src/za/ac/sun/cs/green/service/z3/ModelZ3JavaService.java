@@ -120,7 +120,7 @@ public class ModelZ3JavaService extends ModelService {
 				//getVariableMap is not working probably, some variable is missing.
 				Map<Variable, Expr> variableMap = ex.getVariableMap();
 				Model model = Z3solver.getModel();
-
+				Map<String,Integer> vss = instance.getVss();
 /*				
 				System.out.println(model.toString());
 				//Instead of creating the mapping by ourself, we do it by using Z3 natively.
@@ -166,12 +166,16 @@ public class ModelZ3JavaService extends ModelService {
 
 				for(Map.Entry<Variable,Expr> entry : variableMap.entrySet()) {
 					Variable greenVar = entry.getKey();
-					System.out.println("Getting Variable: " + greenVar.getName() + " from Z3solver");
+//					System.out.println("Getting Variable: " + greenVar.getName() + " from Z3solver");
 					Expr z3Var = entry.getValue();
 					ArrayList<Expr> z3Val = new ArrayList<Expr>();
 					if(greenVar instanceof ArrayVariable){
 						ArrayVariable aVar = (ArrayVariable) greenVar;
-						int size = aVar.getIndexSize().getValue();
+						int size = aVar.getIndexSize().getValue();//FIXME Gladtbx: if we store the model in cache and 
+						//find a different way of return none empty vss queries, we can get rid of this line safely.
+						if(vss!=null && vss.containsKey(aVar.getName())){
+							size = vss.get(aVar.getName());
+						}
 						z3Val.ensureCapacity(size);
 						for(int i = 0; i < size; i++){
 							Expr readByte = ctx.mkSelect((ArrayExpr)z3Var, ctx.mkBV(String.valueOf(i),32));						

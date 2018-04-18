@@ -19,6 +19,8 @@ public class Instance {
 	private Expression fullExpression;
 
 	private final Map<Object, Object> data;
+	
+	private Map<String, Integer> vss;
 
 	public Instance(final Green solver, final Instance parent, final Expression expression) {
 		this.solver = solver;
@@ -27,6 +29,7 @@ public class Instance {
 		this.expression = expression;
 		fullExpression = null;
 		data = new Hashtable<Object, Object>();
+		vss = null;
 	}
 
 	public Instance(final Green solver, final Instance source, final Instance parent, final Expression expression) {
@@ -72,4 +75,11 @@ public class Instance {
 		return data.get(key);
 	}
 	
+	public void setVss(Map<String,Integer> _vss){
+		vss = _vss;
+	}
+	
+	public Map<String,Integer> getVss(){
+		return vss;
+	}
 }
