@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 import za.ac.sun.cs.green.Instance;
 import za.ac.sun.cs.green.Service;
 import za.ac.sun.cs.green.Green;
+import za.ac.sun.cs.green.expr.Expression;
+import za.ac.sun.cs.green.expr.IntConstant;
 import za.ac.sun.cs.green.service.bvfactorizer.resources.SelectStore;
 import za.ac.sun.cs.green.util.Reporter;
 
@@ -52,8 +54,13 @@ public class SerialTaskManager implements TaskManager {
 									if(s.getArrayAccessed().getName() != var){
 										continue;
 									}
-									int index = Integer.parseInt(s.getIndex().toString());
-									resultval[index] = val[index];
+									Expression ind = s.getIndex();
+									if(ind instanceof IntConstant){
+										int index = ((IntConstant)ind).getValue();
+										resultval[index] = val[index];
+									}else{
+										System.out.println("Index Error when parsing factored model");
+									}
 								}
 							}else{
 								combinedResult.put(var, vm.get(var));
