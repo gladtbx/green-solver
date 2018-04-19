@@ -29,11 +29,18 @@ public class SerialTaskManager implements TaskManager {
 		Map<String,Object> combinedResult = new HashMap<String,Object>();
 		for (Service service : services) {
 			for (Instance instance : instances) {
+//				System.out.println(instance.getExpression());
 				Object res = execute0(parent, parentInstance, service, instance);
 				if (res != null) {
 					if(res instanceof Map<?, ?>){
 						@SuppressWarnings("unchecked")
 						Map<String, Object> vm = (Map<String, Object>) res;
+						if(vm.isEmpty()){//One of the queries returns false.
+							result = false;
+							break;
+						}
+						//We need to do processing here
+						//We need to find which bits inside vm is actually used for the current instance.
 						combinedResult.putAll(vm);
 					}else if(result == null){
 						result = res;

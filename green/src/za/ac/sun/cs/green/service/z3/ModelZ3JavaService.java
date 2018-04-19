@@ -120,7 +120,8 @@ public class ModelZ3JavaService extends ModelService {
 				//getVariableMap is not working probably, some variable is missing.
 				Map<Variable, Expr> variableMap = ex.getVariableMap();
 				Model model = Z3solver.getModel();
-				Map<String,Integer> vss = instance.getVss();
+				@SuppressWarnings("unchecked")
+				Map<String,Integer> vss = (Map<String, Integer>) instance.getData("VSS");
 /*				
 				System.out.println(model.toString());
 				//Instead of creating the mapping by ourself, we do it by using Z3 natively.
@@ -166,7 +167,7 @@ public class ModelZ3JavaService extends ModelService {
 
 				for(Map.Entry<Variable,Expr> entry : variableMap.entrySet()) {
 					Variable greenVar = entry.getKey();
-//					System.out.println("Getting Variable: " + greenVar.getName() + " from Z3solver");
+					System.out.println("Getting Variable: " + greenVar.getName() + " from Z3solver");
 					Expr z3Var = entry.getValue();
 					ArrayList<Expr> z3Val = new ArrayList<Expr>();
 					if(greenVar instanceof ArrayVariable){

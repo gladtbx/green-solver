@@ -74,12 +74,4 @@ public class Instance {
 	public Object getData(Object key) {
 		return data.get(key);
 	}
-	
-	public void setVss(Map<String,Integer> _vss){
-		vss = _vss;
-	}
-	
-	public Map<String,Integer> getVss(){
-		return vss;
-	}
 }

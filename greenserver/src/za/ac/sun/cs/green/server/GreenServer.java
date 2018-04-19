@@ -159,7 +159,7 @@ public class GreenServer {
 		//Gladtbx: added the parser for the query.
 		try{
 			Instance i = new Instance(green, null, KleeOutputParser.createExpressionKlee(query));
-			i.setVss(vss);
+			i.setData("VSS", vss);
 	        Object requestRet = i.request("sat");
 	        if(requestRet != null){
 	        	if(requestRet instanceof Map<?, ?>){
@@ -177,7 +177,6 @@ public class GreenServer {
 		            			ret+= Integer.toString(val,10);//Transfer each byte in base 10
 		            			ret+= "|";
 		            		}
-//		            		System.out.println(ret);
 		            	}
 	            	}
 	            	else{
@@ -193,6 +192,7 @@ public class GreenServer {
 	        		}
 	        	}
 	        }
+    		System.out.println(ret);
 	        return ret.toCharArray();
 		}catch(Exception x){
 			log.log(Level.SEVERE, "Process String Failed",x);
