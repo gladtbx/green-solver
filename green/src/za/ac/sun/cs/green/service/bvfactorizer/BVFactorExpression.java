@@ -21,6 +21,7 @@ import za.ac.sun.cs.green.expr.Visitor;
 import za.ac.sun.cs.green.expr.VisitorException;
 import za.ac.sun.cs.green.resources.HashSetMap;
 import za.ac.sun.cs.green.resources.IdentityHashSet;
+import za.ac.sun.cs.green.resources.Pair;
 import za.ac.sun.cs.green.service.bvfactorizer.resources.AVStack;
 import za.ac.sun.cs.green.service.bvfactorizer.resources.ArrayAccesses;
 import za.ac.sun.cs.green.service.bvfactorizer.resources.BVFactorHelper;
@@ -332,6 +333,19 @@ public class BVFactorExpression {
 			factors.add(curFactor);
 		}
 		return factors;
+	}
+	
+	public Map<Set<SelectStore>, Expression> getFactorMap(){
+		Map<Set<SelectStore>, Expression> factorMap = new HashMap<Set<SelectStore>, Expression>();
+		for (Set<SelectStore> vars : var2Factor.keySet()) {
+			Expression curFactor = null;
+			for (Expression e : var2Factor.get(vars)) {
+				curFactor = (curFactor == null) ? e : new Operation(Operation.Operator.AND, curFactor, e);
+			}
+			
+			factorMap.put(vars,curFactor);
+		}
+		return factorMap;
 	}
 
 	public int getNumFactors() {

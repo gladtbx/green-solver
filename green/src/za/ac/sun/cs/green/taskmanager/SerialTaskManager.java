@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import za.ac.sun.cs.green.Instance;
 import za.ac.sun.cs.green.Service;
 import za.ac.sun.cs.green.Green;
+import za.ac.sun.cs.green.service.bvfactorizer.resources.SelectStore;
 import za.ac.sun.cs.green.util.Reporter;
 
 public class SerialTaskManager implements TaskManager {
@@ -39,9 +40,25 @@ public class SerialTaskManager implements TaskManager {
 							result = false;
 							break;
 						}
-						//We need to do processing here
-						//We need to find which bits inside vm is actually used for the current instance.
-						combinedResult.putAll(vm);
+						for(String var:vm.keySet()){
+							if(combinedResult.containsKey(var)){
+								//We need to do processing here
+								//We need to find which bits inside vm is actually used for the current instance.
+								@SuppressWarnings("unchecked")
+								Set<SelectStore> ss = (Set<SelectStore>) instance.getData("SelectStore");
+								int[] resultval = (int[]) combinedResult.get(var);
+								int[] val = (int[]) vm.get(var);
+								for(SelectStore s:ss){
+									if(s.getArrayAccessed().getName() != var){
+										continue;
+									}
+									int index = Integer.parseInt(s.getIndex().toString());
+									resultval[index] = val[index];
+								}
+							}else{
+								combinedResult.put(var, vm.get(var));
+							}
+						}
 					}else if(result == null){
 						result = res;
 					}else if(res instanceof Boolean){

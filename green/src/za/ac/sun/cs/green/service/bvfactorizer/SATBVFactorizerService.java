@@ -11,6 +11,7 @@ import za.ac.sun.cs.green.Service;
 import za.ac.sun.cs.green.expr.Expression;
 import za.ac.sun.cs.green.resources.Pair;
 import za.ac.sun.cs.green.service.BasicService;
+import za.ac.sun.cs.green.service.bvfactorizer.resources.SelectStore;
 import za.ac.sun.cs.green.util.Reporter;
 
 public class SATBVFactorizerService extends BasicService {
@@ -64,10 +65,12 @@ public class SATBVFactorizerService extends BasicService {
 			instance.setData(BVFactorExpression.class, fc);
 
 			result = new HashSet<Instance>();
-			for (Expression e : fc.getFactors()) {
-				//System.out.println("BVFactorizer computes instance for :" + e+"\n");
+			Map<Set<SelectStore>, Expression> factorMap = fc.getFactorMap();
+			for(Set<SelectStore> ss:factorMap.keySet()){
+				Expression e = factorMap.get(ss);
 				final Instance i = new Instance(getSolver(), instance.getSource(), null, e);
 				i.setData("VSS",instance.getData("VSS"));
+				i.setData("SelectStore", ss);
 				result.add(i);
 			}
 			result = Collections.unmodifiableSet(result);
