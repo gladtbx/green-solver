@@ -164,7 +164,14 @@ public class ModelZ3JavaService extends ModelService {
 					}
 				}
 				*/
-
+				if(vss.isEmpty() && variableMap.entrySet().isEmpty()){
+					//Special Case, when we require no return value and no model variable
+					int[] t;
+					t = new int[1];
+					t[0] = 0;
+					results.put("Hack", t);
+					return results;
+				}
 				for(Map.Entry<Variable,Expr> entry : variableMap.entrySet()) {
 					Variable greenVar = entry.getKey();
 					System.out.println("Getting Variable: " + greenVar.getName() + " from Z3solver");
