@@ -32,4 +32,9 @@ public class NullStore extends BasicStore {
 		putCount++;
 	}
 
+	@Override
+	public int getInsertionCount() {
+		return putCount;
+	}
+
 }

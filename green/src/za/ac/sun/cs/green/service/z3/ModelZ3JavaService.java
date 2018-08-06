@@ -61,7 +61,7 @@ public class ModelZ3JavaService extends ModelService {
 	    }
 	}
 
-	private String processFuncInterp(FuncInterp funcInterp){
+/*	private String processFuncInterp(FuncInterp funcInterp){
 		String ret="";
 		Expr el = funcInterp.getElse();
 		if(el.isNumeral()){
@@ -99,6 +99,7 @@ public class ModelZ3JavaService extends ModelService {
 		}
 		return ret;
 	}
+	*/
 	
 	@Override
 	protected Map<String, Object> model(Instance instance) {		
