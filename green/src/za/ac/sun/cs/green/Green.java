@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import za.ac.sun.cs.green.log.GreenHandler;
+import za.ac.sun.cs.green.service.z3.ModelZ3JavaService;
 import za.ac.sun.cs.green.store.NullStore;
 import za.ac.sun.cs.green.store.Store;
 import za.ac.sun.cs.green.taskmanager.SerialTaskManager;
@@ -313,6 +314,18 @@ public class Green {
 	
 	public Properties getPropertiesFile() {
 		return properties;
+	}
+	
+	public int getZ3JavaModelMissCount(){
+		for (Set<Service> s : services1.values()) {
+			for (Service ss : s) {
+				System.out.println(ss.getClass().getSimpleName());
+				if(ss.getClass().getSimpleName().equals("ModelZ3JavaService")){
+					return ((ModelZ3JavaService) ss).getCacheMissCount();
+				}
+			}
+		}
+		return -1;
 	}
 
 }

@@ -131,6 +131,6 @@ public interface Store {
 	public void put(String key, Serializable value);
 
 	public Pair<Boolean, Model> getPair(String key);
-
-
+	
+	public int getInsertionCount();
 }

@@ -18,6 +18,7 @@ import za.ac.sun.cs.green.Instance;
 import za.ac.sun.cs.green.expr.Variable;
 //import za.ac.sun.cs.green.expr.Expression;
 import za.ac.sun.cs.green.parser.klee.KleeOutputParser;
+import za.ac.sun.cs.green.store.Store;
 import za.ac.sun.cs.green.store.memory.MemoryStore;
 import za.ac.sun.cs.green.util.Configuration;
 
@@ -26,6 +27,8 @@ public class GreenServer {
 	private static Green green = null;
 
 	private static Logger log = null;
+	
+	private static Boolean cacheMissed = false;
 
 	public static void main(String[] args) {
 		if(args.length != 1){
@@ -60,6 +63,7 @@ public class GreenServer {
 					output = new PrintStream(clientSocket.getOutputStream());
 					while (clientSocket.isConnected()) {
 						String query = "";
+						//We collect variable names and sized from Klee side.
 						Map<String,Integer> vss = new Hashtable<String,Integer>();//Variable Sizes.
 						Boolean close = false;
 						while(true){
@@ -159,15 +163,33 @@ public class GreenServer {
 		//Gladtbx: added the parser for the query.
 		try{
 			Instance i = new Instance(green, null, KleeOutputParser.createExpressionKlee(query));
+			//VSS is the mapping of variable names to the size of the variable of request
 			i.setData("VSS", vss);
+			int missedCount = green.getZ3JavaModelMissCount();
+			System.out.println(missedCount);
 	        Object requestRet = i.request("sat");
 	        if(requestRet != null){
 	        	if(requestRet instanceof Map<?, ?>){
+	        		//vm is the request result
 	            	@SuppressWarnings("unchecked")
 					Map<String, Object> vm = (Map<String, Object>) requestRet;
 	            	//System.out.println("Get Map: " + vm.toString());
+	            	//Gladtbx:
+	            	//We use the insertion count to detect if the query had a cache hit or miss
+	            	//If the insertion count does not change, the query had a hit, thus ret = 1
+	            	//Else we had a miss
 	            	if(vm.size() != 0){
-		            	ret = "1";
+	            		if(green.getZ3JavaModelMissCount() == missedCount ){
+	            			ret = "1";
+	            		}else if(green.getZ3JavaModelMissCount() > missedCount){
+	            			ret = "2";
+	            			missedCount = green.getZ3JavaModelMissCount();
+	            		}else{
+	            			//Error here, missedCount should only increase
+	            			ret = "2";
+	            			log.log(Level.SEVERE, "MissedCount form Model Service Decreased! This should not happen!");
+	            		}
+		            	//The mapping of the variables are attached here.
 		            	for(Map.Entry<String,Object> entry : vm.entrySet()){
 		            		ret+=" ";
 		            		ret+=entry.getKey();

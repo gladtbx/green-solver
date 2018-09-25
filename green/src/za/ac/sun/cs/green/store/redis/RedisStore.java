@@ -98,5 +98,16 @@ public class RedisStore extends BasicStore {
 			log.log(Level.SEVERE, "io problem", x);
 		}
 	}
+	
+	/*
+	 * Gladtbx
+	 * Get the number of insertions made by this storage.
+	 * Used to determine if a query is a cache hit or not.
+	 * 
+	 */
+	@Override
+	public int getInsertionCount(){
+		return insertionCount;
+	}
 
 }

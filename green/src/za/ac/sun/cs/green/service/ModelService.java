@@ -77,5 +77,9 @@ public abstract class ModelService extends BasicService {
 	}
 
 	protected abstract Map<String, Object> model(Instance instance);
+	
+	public int getCacheMissCount(){
+		return cacheMissCount;
+	}
 
 }

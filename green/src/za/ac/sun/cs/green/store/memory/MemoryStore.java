@@ -72,4 +72,9 @@ public class MemoryStore extends BasicStore {
 			log.log(Level.SEVERE, "io problem", x);
 		}
 	}
+
+	@Override
+	public int getInsertionCount() {
+		return insertionCount;
+	}
 }
